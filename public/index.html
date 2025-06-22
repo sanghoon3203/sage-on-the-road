@@ -28,6 +28,48 @@
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
+    <style>
+            .divider {
+        margin: 20px 0;
+        color: #aaa;
+        display: flex;
+        align-items: center;
+        text-align: center;
+      }
+
+      .divider::before,
+      .divider::after {
+        content: '';
+        flex: 1;
+        border-bottom: 1px solid #555;
+      }
+
+      .divider:not(:empty)::before {
+        margin-right: .5em;
+      }
+
+      .divider:not(:empty)::after {
+        margin-left: .5em;
+      }
+      * { box-sizing: border-box; }
+      html, body, #root, .app-container { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: #111; color: white; font-family: 'Malgun Gothic', sans-serif; }
+      .title-screen { width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; text-align: center; background: url('https://images.unsplash.com/photo-1447752875215-b2761acb3c5d?q=80&w=2070') center/cover; }
+      .title-overlay { width: 100%; height: 100%; background: rgba(0,0,0,0.5); backdrop-filter: blur(5px); display: flex; flex-direction: column; justify-content: center; align-items: center; }
+      .logo { font-size: 4rem; margin-bottom: 2rem; }
+      .title-button { background: rgba(255,255,255,0.1); border: 1px solid white; color: white; padding: 10px 20px; margin: 10px; font-size: 1.2rem; cursor: pointer; transition: background 0.3s; min-width: 200px; }
+      .title-button:hover { background: rgba(255,255,255,0.3); }
+      .auth-form { display: flex; flex-direction: column; width: 300px; }
+      .auth-form input { background: transparent; border: 1px solid white; color: white; padding: 10px; margin-bottom: 10px; }
+      .dialogue-box { position: absolute; bottom: 5%; left: 10%; width: 80%; background: rgba(0,0,0,0.7); border: 1px solid #555; border-radius: 10px; padding: 20px; cursor: pointer; }
+      .dialogue-content { font-size: 1.2rem; line-height: 1.6; }
+      .next-indicator { position: absolute; bottom: 15px; right: 20px; animation: blink 1s infinite; }
+      @keyframes blink { 50% { opacity: 0; } }
+      .answer-form { margin-top: 20px; display: flex; flex-direction: column; }
+      .answer-form textarea { width: 100%; height: 80px; background: #222; color: white; border: 1px solid #555; padding: 10px; font-size: 1.1rem; }
+      .answer-form button { align-self: flex-end; margin-top: 10px; }
+      .system-message { color: #aaa; font-style: italic; }
+      .music-toggle { position: absolute; top: 20px; right: 20px; background: none; border: none; font-size: 2rem; cursor: pointer; }
+    </style>
     <div id="root"></div>
     <!--
       This HTML file is a template.
