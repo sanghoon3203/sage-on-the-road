@@ -2,18 +2,18 @@
 import React, { useEffect } from 'react';
 import { Canvas } from '@react-three/fiber';
 import { OrthographicCamera, PerspectiveCamera } from '@react-three/drei';
-import { useGameStore } from '../store/useGameStore';
+import { useGameStore } from '../store/useGameStore'; // <--- 수정: 기본 가져오기에서 이름 있는 가져오기로 변경
 import Player from '../components/world/Player';
-import DialogueBox from '../components/ui/DialogueBox';
+import { DialogueBox } from '../components/ui/DialogueBox'; // <--- 수정: 기본 가져오기에서 이름 있는 가져오기로 변경
 import MusicToggle from '../components/ui/MusicToggle';
 
 // 각 스테이지 컴포넌트를 import 합니다.
 import Stage1_Sketch from './stages/Stage1_Sketch';
-import Stage2_2DLike from './scenes/stages/Stage2_2DLike'; // 경로 수정
-import Stage3_2_5DPlatformer from './scenes/stages/Stage3_2_5DPlatformer'; // 경로 수정
-import Stage4_Full3D from './scenes/stages/Stage4_Full3D'; // 경로 수정
-import Stage5_ThirdPerson from './scenes/stages/Stage5_ThirdPerson'; // 경로 수정
-import Stage6_FirstPerson from './scenes/stages/Stage6_FirstPerson'; // 경로 수정
+import Stage2_2DLike from './stages/Stage2_2DLike'; // <--- 수정: 경로 './scenes/stages/' -> './stages/'
+import Stage3_2_5DPlatformer from './stages/Stage3_2_5DPlatformer'; // <--- 수정
+import Stage4_Full3D from './stages/Stage4_Full3D'; // <--- 수정
+import Stage5_ThirdPerson from './stages/Stage5_ThirdPerson'; // <--- 수정
+import Stage6_FirstPerson from './stages/Stage6_FirstPerson'; // <--- 수정
 
 
 const GameScene = () => {

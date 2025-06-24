@@ -21,16 +21,10 @@ const firebaseConfig = {
 // Firebase 앱을 초기화합니다. 이 작업은 프로젝트에서 단 한 번만 수행합니다.
 const app = initializeApp(firebaseConfig);
 
-// 초기화된 앱을 사용하여 다른 Firebase 서비스를 가져옵니다.
-// 우리 프로젝트에서는 '인증' 기능을 사용하므로 getAuth를 호출합니다.
+// 각 서비스를 상수 선언 시 바로 export
 export const auth = getAuth(app);
-export const googleProvider = new GoogleAuthProvider();
-
-// '분석' 기능도 초기화합니다.
-// 이렇게 초기화만 해두면 기본적인 페이지 뷰 등의 이벤트가 자동으로 수집됩니다.
-export const analytics = getAnalytics(app);
-export { auth, db }; // db 내보내기
-
+export const db = getFirestore(app);
+export const analytics = getAnalytics(app); // analytics도 직접 export
 // 나중에 Firestore(데이터베이스)나 Storage(파일 저장소)를 사용하게 되면
 // 아래와 같이 추가할 수 있습니다.
 // import { getFirestore } from "firebase/firestore"

@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { onAuthStateChanged } from 'firebase/auth';
 import { auth } from './firebase/config';
-import useGameStore from './store/useGameStore';
-
+import { useGameStore } from './store/useGameStore';
 import TitleScene from './scenes/TitleScene';
 import { GameScene } from './scenes/GameScene';
 import { DialogueBox } from './components/ui/DialogueBox';
