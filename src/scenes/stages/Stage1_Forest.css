@@ -1,0 +1,57 @@
+/* Stage1_Forest.css */
+.stage1-forest-container {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  background-image: url('/public/assets/background_image/stage1_forest_bg.png');
+  background-size: cover;
+}
+
+.player {
+  position: absolute;
+  width: 80px;
+  height: 120px;
+  background-image: url('/public/assets/models/player.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  bottom: 50px;
+  left: 50%;
+  transform: translateX(-50%);
+  transition: transform 0.1s ease-out;
+}
+
+.player.moving {
+  /* 예: 플레이어의 이동 애니메이션 */
+}
+
+.player.face-left {
+  transform: translateX(-50%) scaleX(-1); /* 왼쪽 방향 */
+}
+
+.player.face-right {
+  transform: translateX(-50%) scaleX(1); /* 오른쪽 방향 */
+}
+
+.npc-character {
+  position: absolute;
+  width: 100px;
+  height: 150px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  bottom: 50px;
+}
+
+.npc-name-tag {
+  position: absolute;
+  top: -30px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: rgba(0, 0, 0, 0.7);
+  color: white;
+  padding: 3px 8px;
+  border-radius: 5px;
+  font-size: 0.8em;
+}

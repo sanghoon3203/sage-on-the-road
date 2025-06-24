@@ -1,8 +1,8 @@
 // src/components/ui/DialogueBox.jsx
 import React from 'react';
-import { useGameStore } from '../../store/useGameStore'; // <--- 수정: 기본 가져오기에서 이름 있는 가져오기로 변경
-import './DialogueBox.css';
-import { getAIResponse } from '../../api/aiService';
+import { useGameStore } from '../../store/useGameStore'; 
+import './DialogueBox.css'; // CSS 파일 import 추가
+import { getAIEvaluation } from '../../api/aiService'; // 수정됨: getAIEvaluation으로 변경
 
 const DialogueBox = () => {
   const {
@@ -32,38 +32,38 @@ const DialogueBox = () => {
             // 현자와의 대화 종료 시점 (스테이지 1)
             // AI에게 질문을 던지고 답변을 기다립니다.
             const questionSage1 = "세상은 무엇으로 이루어져 있다고 생각하나요? 보이는 것과 보이지 않는 것 중, 무엇이 더 중요하다고 생각하나요?";
-            const aiResponseSage1 = await getAIResponse(questionSage1);
+            const aiResponseSage1 = await getAIEvaluation(questionSage1); // 함수명 수정
             setDialogue([aiResponseSage1]); // AI 답변을 대화로 설정
             useGameStore.getState().setGameState('answering'); // 답변 대기 상태로 전환
             break;
           case 'npc_wanderer1':
             // 방랑자와의 대화 종료 시점 (스테이지 1)
             const questionWanderer1 = "당신이 걸어온 길에서 가장 중요하다고 느낀 것은 무엇이며, 그것은 당신에게 어떤 의미였나요?";
-            const aiResponseWanderer1 = await getAIResponse(questionWanderer1);
+            const aiResponseWanderer1 = await getAIEvaluation(questionWanderer1); // 함수명 수정
             setDialogue([aiResponseWanderer1]);
             useGameStore.getState().setGameState('answering');
             break;
           case 'npc_scholar2': // 스테이지 2 NPC 예시
             const questionScholar2 = "지식이 세상을 이해하는 유일한 길이라고 생각하십니까? 아니면 지식 너머에 무언가 더 중요한 것이 존재할까요?";
-            const aiResponseScholar2 = await getAIResponse(questionScholar2);
+            const aiResponseScholar2 = await getAIEvaluation(questionScholar2); // 함수명 수정
             setDialogue([aiResponseScholar2]);
             useGameStore.getState().setGameState('answering');
             break;
           case 'npc_guardian3': // 스테이지 3 NPC 예시
             const questionGuardian3 = "이 길의 끝에는 무엇이 있을 거라고 생각하십니까? 그 끝이 존재한다면, 그 너머는 어떤 모습일까요?";
-            const aiResponseGuardian3 = await getAIResponse(questionGuardian3);
+            const aiResponseGuardian3 = await getAIEvaluation(questionGuardian3); // 함수명 수정
             setDialogue([aiResponseGuardian3]);
             useGameStore.getState().setGameState('answering');
             break;
           case 'npc_guide4': // 스테이지 4 NPC 예시
             const questionGuide4 = "자유는 어떤 형태로 존재한다고 생각하십니까? 그리고 그 자유는 우리에게 어떤 책임을 요구하나요?";
-            const aiResponseGuide4 = await getAIResponse(questionGuide4);
+            const aiResponseGuide4 = await getAIEvaluation(questionGuide4); // 함수명 수정
             setDialogue([aiResponseGuide4]);
             useGameStore.getState().setGameState('answering');
             break;
           case 'npc_master6': // 스테이지 6 NPC 예시
             const questionMaster6 = "모든 존재가 하나라는 말은 어떤 의미로 다가오십니까? 당신이 현자의 길을 걸으며 깨달은 궁극적인 진실은 무엇입니까?";
-            const aiResponseMaster6 = await getAIResponse(questionMaster6);
+            const aiResponseMaster6 = await getAIEvaluation(questionMaster6); // 함수명 수정
             setDialogue([aiResponseMaster6]);
             useGameStore.getState().setGameState('answering');
             break;
@@ -126,4 +126,4 @@ const DialogueBox = () => {
   );
 };
 
-export default DialogueBox;
+export default DialogueBox; // 기본 내보내기로 유지

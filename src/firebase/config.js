@@ -5,6 +5,7 @@ import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 import { getAnalytics } from "firebase/analytics";
 import { GoogleAuthProvider } from "firebase/auth"; // GoogleAuthProvider 추가
+import { getFirestore } from "firebase/firestore";
 
 // 제공해주신 Firebase 프로젝트 설정 정보입니다.
 const firebaseConfig = {
@@ -24,7 +25,8 @@ const app = initializeApp(firebaseConfig);
 // 각 서비스를 상수 선언 시 바로 export
 export const auth = getAuth(app);
 export const db = getFirestore(app);
-export const analytics = getAnalytics(app); // analytics도 직접 export
+export const analytics = getAnalytics(app); 
+export const googleProvider = new GoogleAuthProvider(); // 수정됨: googleProvider 내보내기 추가
 // 나중에 Firestore(데이터베이스)나 Storage(파일 저장소)를 사용하게 되면
 // 아래와 같이 추가할 수 있습니다.
 // import { getFirestore } from "firebase/firestore"

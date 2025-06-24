@@ -1,38 +1,153 @@
-// src/scenes/stages/Stage1_Sketch.jsx
-import React from 'react';
-import * as THREE from 'three';
-import { useGLTF } from '@react-three/drei';
-import NpcCharacter from '../../components/world/NpcCharacter';
-import VideoBackground from '../../components/world/VideoBackground'; // 스케치 비디오가 있다면 사용
+import React, { useState, useEffect, useRef } from 'react';
+import { Html } from '@react-three/drei'; // 이 import가 필요합니다
+import { useGameStore } from '../../store/useGameStore';
+import '../../components/ui/DialogueBox.css';
+import './Stage1_Forest.css';
 
-const Stage1_Sketch = () => {
-    // Stage 1의 맵 모델 및 텍스처 로드 (미드저니로 생성한 스케치 스타일 에셋)
-    const { nodes, materials } = useGLTF('/models/stage1_map_sketch.gltf'); // 예시 경로
+const npcsData = [
+  {
+    id: 'npc_sage1',
+    x: 800,
+    initialDialogue: [
+      "현자: 어서 오게, 길을 걷는 자여.",
+      "현자: 이 숲은 깊은 지혜를 품고 있지.",
+      "현자: 무엇을 찾고 있는가?",
+    ],
+    encounterRange: 100,
+  },
+  {
+    id: 'npc_wanderer1',
+    x: 2000,
+    initialDialogue: [
+      "방랑자: 흐음... 여기는 오랜만에 오는군.",
+      "방랑자: 길은 언제나 새로운 것을 보여주지.",
+      "방랑자: 자네는 어떤 길을 택할 텐가?",
+    ],
+    encounterRange: 100,
+  },
+];
 
-    // 스케치 스타일 재질 정의 (또는 GLTF에 포함된 재질 사용)
-    const sketchMaterial = new THREE.MeshBasicMaterial({
-        color: 0xffffff, // 기본 흰색
-        map: new THREE.TextureLoader().load('/textures/sketch_paper_texture.jpg'), // 종이 질감 텍스처
-        alphaMap: new THREE.TextureLoader().load('/textures/sketch_line_alpha.png'), // 선화 알파 맵 (투명한 선화)
-        transparent: true,
-    });
-    // 또는 Post-processing 셰이더를 통해 전체 장면에 스케치 효과 적용
+const Stage1_Forest = () => {
+  const {
+    gameState,
+    setGameState,
+    setDialogue,
+    setActiveNpc,
+    completedNpcs,
+    addCompletedNpc,
+    activeNpc,
+  } = useGameStore();
 
-    return (
-        <>
-            {/* 스케치 배경 (비디오 또는 이미지) */}
-            {/* <VideoBackground videoPath="/videos/sketch_bg.mp4" /> */}
-            <mesh geometry={nodes.Stage1Map.geometry} material={sketchMaterial} position={[0, 0, 0]} />
+  const [playerPositionX, setPlayerPositionX] = useState(0);
+  const [backgroundOffset, setBackgroundOffset] = useState(0);
+  const [isMoving, setIsMoving] = useState(false);
+  const [isFacingRight, setIsFacingRight] = useState(true);
+  const [currentNpcEncountered, setCurrentNpcEncountered] = useState(null);
 
-            {/* NPC 캐릭터 (Stage1 스타일로 렌더링될 것임) */}
-            <NpcCharacter id="npc_sage1" position={[2, 0, -5]} rotation={[0, Math.PI / 4, 0]} />
-            <NpcCharacter id="npc_wanderer1" position={[-3, 0, -2]} rotation={[0, -Math.PI / 6, 0]} />
+  const stageWidth = 3000;
+  const playerSpeed = 5;
+  const gameLoopRef = useRef(null);
+  const keysPressed = useRef({});
 
-            {/* 조명 설정 (간단하게) */}
-            <ambientLight intensity={0.8} />
-            <directionalLight position={[5, 10, 5]} intensity={0.5} />
-        </>
-    );
+  // 키보드 이벤트 핸들러
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      keysPressed.current[e.key] = true;
+      setIsMoving(true);
+    };
+
+    const handleKeyUp = (e) => {
+      delete keysPressed.current[e.key];
+      if (!keysPressed.current['ArrowLeft'] && !keysPressed.current['ArrowRight']) {
+        setIsMoving(false);
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    window.addEventListener('keyup', handleKeyUp);
+
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+      window.removeEventListener('keyup', handleKeyUp);
+    };
+  }, []);
+
+  // 게임 루프
+  useEffect(() => {
+    if (gameState !== 'playing') {
+      cancelAnimationFrame(gameLoopRef.current);
+      return;
+    }
+
+    const gameLoop = () => {
+      setPlayerPositionX((prevX) => {
+        let newX = prevX;
+        let moved = false;
+
+        if (keysPressed.current['ArrowLeft']) {
+          newX = Math.max(0, prevX - playerSpeed);
+          setIsFacingRight(false);
+          moved = true;
+        }
+        if (keysPressed.current['ArrowRight']) {
+          newX = Math.min(stageWidth, prevX + playerSpeed);
+          setIsFacingRight(true);
+          moved = true;
+        }
+
+        if (moved) {
+          const viewportWidth = window.innerWidth * 0.5;
+          setBackgroundOffset(-(newX - viewportWidth));
+          
+          npcsData.forEach((npc) => {
+            if (!completedNpcs.includes(npc.id) && currentNpcEncountered !== npc.id) {
+              const distance = Math.abs(newX - npc.x);
+              if (distance < npc.encounterRange) {
+                setDialogue(npc.initialDialogue);
+                setActiveNpc(npc.id);
+                setCurrentNpcEncountered(npc.id);
+                setGameState('talking');
+                cancelAnimationFrame(gameLoopRef.current);
+              }
+            }
+          });
+        }
+        return newX;
+      });
+      gameLoopRef.current = requestAnimationFrame(gameLoop);
+    };
+
+    gameLoopRef.current = requestAnimationFrame(gameLoop);
+
+    return () => {
+      cancelAnimationFrame(gameLoopRef.current);
+    };
+  }, [gameState, setDialogue, setActiveNpc, completedNpcs, currentNpcEncountered, setGameState]);
+
+  return (
+    <Html>
+      <div className="stage1-forest-container" style={{ backgroundPositionX: `${backgroundOffset}px` }}>
+        <div
+          className={`player ${isMoving ? 'moving' : ''} ${isFacingRight ? 'face-right' : 'face-left'}`}
+        ></div>
+
+        {npcsData.map((npc) => (
+          <div
+            key={npc.id}
+            className={`npc-character ${completedNpcs.includes(npc.id) ? 'completed' : ''}`}
+            style={{
+              left: `${npc.x + backgroundOffset}px`,
+            }}
+          >
+            <img src={`/images/${npc.id}.png`} alt={npc.id} />
+            {gameState === 'playing' && Math.abs(playerPositionX - npc.x) < 200 && !completedNpcs.includes(npc.id) && (
+              <div className="npc-name-tag">{npc.id.split('_')[1]}</div>
+            )}
+          </div>
+        ))}
+      </div>
+    </Html>
+  );
 };
 
-export default Stage1_Sketch;
+export default Stage1_Forest;

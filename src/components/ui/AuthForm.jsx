@@ -9,7 +9,7 @@ import {
     signInWithEmailAndPassword,
     signInWithPopup
 } from 'firebase/auth';
-import { auth, googleProvider } from '../../firebase/config'; // googleProvider도 가져옵니다.
+import { auth, googleProvider } from '../../firebase/config'; // 수정됨: googleProvider를 이름 내보내기로 가져옴
 
 
 export function AuthForm({ mode, onBack }) {

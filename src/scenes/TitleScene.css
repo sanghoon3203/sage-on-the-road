@@ -1,0 +1,91 @@
+/* TitleScene에 대한 기본 스타일을 여기에 추가합니다. */
+.title-scene {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  position: relative; /* 오버레이를 위해 relative 설정 */
+}
+
+.title-scene canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6); /* 배경과 텍스트를 구분하기 위한 오버레이 */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  text-align: center;
+}
+
+.overlay h1 {
+  font-size: 3rem;
+  margin-bottom: 2rem;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+}
+
+.overlay button {
+  background: rgba(255,255,255,0.1);
+  border: 1px solid white;
+  color: white;
+  padding: 10px 20px;
+  margin: 10px;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: background 0.3s;
+  min-width: 200px;
+}
+
+.overlay button:hover {
+  background: rgba(255,255,255,0.3);
+}
+
+.auth-form {
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+    padding: 20px;
+    border: 1px solid #777;
+    border-radius: 8px;
+    background: rgba(0,0,0,0.7);
+}
+.auth-form input {
+    background: transparent;
+    border: 1px solid #ccc;
+    color: white;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+.auth-form .divider {
+  margin: 20px 0;
+  color: #aaa;
+  display: flex;
+  align-items: center;
+  text-align: center;
+}
+
+.auth-form .divider::before,
+.auth-form .divider::after {
+  content: '';
+  flex: 1;
+  border-bottom: 1px solid #555;
+}
+
+.auth-form .divider:not(:empty)::before {
+  margin-right: .5em;
+}
+
+.auth-form .divider:not(:empty)::after {
+  margin-left: .5em;
+}
