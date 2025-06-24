@@ -29,6 +29,7 @@ export const googleProvider = new GoogleAuthProvider();
 // '분석' 기능도 초기화합니다.
 // 이렇게 초기화만 해두면 기본적인 페이지 뷰 등의 이벤트가 자동으로 수집됩니다.
 export const analytics = getAnalytics(app);
+export { auth, db }; // db 내보내기
 
 // 나중에 Firestore(데이터베이스)나 Storage(파일 저장소)를 사용하게 되면
 // 아래와 같이 추가할 수 있습니다.
