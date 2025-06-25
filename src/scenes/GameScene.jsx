@@ -5,15 +5,9 @@ import { OrthographicCamera, PerspectiveCamera } from '@react-three/drei';
 import { useGameStore } from '../store/useGameStore'; // <--- 수정: 기본 가져오기에서 이름 있는 가져오기로 변경
 import Player from '../components/world/Player';
 import DialogueBox from '../components/ui/DialogueBox'; // 수정: 기본 내보내기로 가져오도록 변경
-import MusicToggle from '../components/ui/MusicToggle';
 
 // 각 스테이지 컴포넌트를 import 합니다.
 import Stage1_Forest from './stages/Stage1_Forest';
-import Stage2_2DLike from './stages/Stage2_2DLike'; // <--- 수정: 경로 './scenes/stages/' -> './stages/'
-import Stage3_2_5DPlatformer from './stages/Stage3_2_5DPlatformer'; // <--- 수정
-import Stage4_Full3D from './stages/Stage4_Full3D'; // <--- 수정
-import Stage5_ThirdPerson from './stages/Stage5_ThirdPerson'; // <--- 수정
-import Stage6_FirstPerson from './stages/Stage6_FirstPerson'; // <--- 수정
 
 
 const GameScene = () => {
@@ -22,12 +16,7 @@ const GameScene = () => {
     // stageId에 따라 렌더링할 스테이지 컴포넌트를 결정합니다.
     const CurrentStageComponent = (() => {
         switch (stageId) {
-            case 1: return Stage1_Forest;
-            case 2: return Stage2_2DLike;
-            case 3: return Stage3_2_5DPlatformer;
-            case 4: return Stage4_Full3D;
-            case 5: return Stage5_ThirdPerson;
-            case 6: return Stage6_FirstPerson;
+            case 1: return Stage1_Forest; 
             default: return Stage1_Forest; // 기본 스테이지
         }
     })();
@@ -55,7 +44,6 @@ const GameScene = () => {
                 <pointLight position={[10, 10, 10]} />
             </Canvas>
             {gameState === 'talking' && <DialogueBox />}
-            <MusicToggle />
         </>
     );
 };

@@ -1,25 +1,59 @@
 /* Stage1_Forest.css */
 .stage1-forest-container {
-  position: relative;
-  width: 100vw;
-  height: 100vh;
+  position: absolute;  /* relative 대신 absolute 사용 */
+  top: 0;
+  left: 0;
+  width: 4000px;         /* 전체 화면 너비 */
+  height: 100vh;        /* 전체 화면 높이 */
   overflow: hidden;
   background-image: url('/public/assets/background_image/stage1_forest_bg.png');
-  background-size: cover;
+  background-repeat: repeat-x;
+  background-size: cover; /* 또는 contain / auto 등 조절 */
+  background-position: top left; /* 여기 중요: 왼쪽 위 정렬 */
+  pointer-events: none; /* 마우스 이벤트를 통과시켜야 한다면 이 옵션 필요 */
+  z-index: 1;
 }
-
+.world-container {
+  position: absolute;
+  top: 0; left: 0;
+  height: 100vh;
+  overflow: hidden;
+}
+.map-section {
+  position: absolute;
+  top: 0;
+  height: 100vh;
+}
+.stage1-river-container {
+  position: absolute;  /* relative 대신 absolute 사용 */
+  top: 0;
+  left: 0;
+  width: 150vw;         /* 전체 화면 너비 */
+  height: 100vh;        /* 전체 화면 높이 */
+  overflow: hidden;
+  background-image: url('/public/assets/background_image/stage1_forest_bg.png');
+  background-repeat: repeat-x;
+  background-size: cover; /* 또는 contain / auto 등 조절 */
+  background-position: top left; /* 여기 중요: 왼쪽 위 정렬 */
+  pointer-events: none; /* 마우스 이벤트를 통과시켜야 한다면 이 옵션 필요 */
+  z-index: 1;
+}
 .player {
   position: absolute;
   width: 80px;
   height: 120px;
-  background-image: url('/public/assets/models/player.png');
+  background-image: url('/public/assets/models/player1.png');
   background-size: contain;
   background-repeat: no-repeat;
-  background-position: center;
+  background-position: left;
   bottom: 50px;
-  left: 50%;
-  transform: translateX(-50%);
+  left: 100px;
+  transform: none;
   transition: transform 0.1s ease-out;
+  /* 투명 배경 지원 */
+  background-color: transparent;
+  border: none;
+  outline: none;  
 }
 
 .player.moving {
@@ -38,6 +72,7 @@
   position: absolute;
   width: 100px;
   height: 150px;
+  background-image: url('/public/assets/models/npc_sage.png');
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;

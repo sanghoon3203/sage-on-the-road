@@ -84,7 +84,7 @@ const TitleScene = () => {
         {/* 애니메이션 효과를 위해 motion.div 사용 */}
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
           {/* 타이틀 로고 */}
-          <h1 className="logo">길 위의 현자</h1>
+          <img src='/assets/logo_main1.png' width='300'></img>
 
           {/* 사용자가 로그인되어 있고, AuthForm이 활성화되지 않은 경우 */}
           {user && !authMode ? (
